@@ -221,16 +221,21 @@ function MateriaForm({ initial, usedColors, onSave, onCancel }) {
           </div>
           {selDays.length>0 && (
             <div style={{ marginTop:10, display:"flex", flexDirection:"column", gap:6 }}>
-              {DAYS_SHORT.filter(d=>selDays.includes(d)).map(d => (
-                <div key={d} style={{ display:"flex", alignItems:"center", gap:8 }}>
-                  <span style={{ background:color, color:"white", fontSize:9, fontWeight:800, padding:"2px 8px", borderRadius:20, minWidth:30, textAlign:"center" }}>{d}</span>
-                  <input value={diasH[d]||""} onChange={e=>setHora(d,e.target.value)} placeholder="Ej. 7:00 - 8:30"
-                    style={{ flex:1, padding:"6px 10px", border:"2px solid #e8e0d8", borderRadius:10, fontSize:12, fontFamily:"Nunito, sans-serif", color:"#2C3E50", outline:"none", boxSizing:"border-box" }}
-                    onFocus={e=>e.target.style.borderColor=color} onBlur={e=>e.target.style.borderColor="#e8e0d8"}/>
+              {DAYS_SHORT.filter(d=>selDays.includes(d)).map(d => {
+                const [start="", end=""] = (diasH[d]||"").split(" - ");
+                return (
+                  <div key={d} style={{ display:"flex", alignItems:"center", gap:6 }}>
+                     <span style={{ background:color, color:"white", fontSize:9, fontWeight:800, padding:"2px 8px", borderRadius:20, minWidth:30, textAlign:"center" }}>{d}</span>
+                     <input type="time" value={start} onChange={e=>setHora(d, `${e.target.value} - ${end}`)}
+                       style={{ flex:1, padding:"6px 8px", border:"2px solid #e8e0d8", borderRadius:10, fontSize:12, fontFamily:"Nunito, sans-serif", color:"#2C3E50", outline:"none", boxSizing:"border-box" }}/>
+                     <span style={{ fontSize:10, color:"#9a8f84" }}>a</span>
+                     <input type="time" value={end} onChange={e=>setHora(d, `${start} - ${e.target.value}`)}
+                       style={{ flex:1, padding:"6px 8px", border:"2px solid #e8e0d8", borderRadius:10, fontSize:12, fontFamily:"Nunito, sans-serif", color:"#2C3E50", outline:"none", boxSizing:"border-box" }}/>
                 </div>
-              ))}
-            </div>
-          )}
+              );
+            })}
+        </div>
+      )}
         </div>
 
         <div style={{ display:"flex", gap:8, marginTop:4 }}>
