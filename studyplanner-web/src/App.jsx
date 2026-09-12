@@ -222,20 +222,22 @@ function MateriaForm({ initial, usedColors, onSave, onCancel }) {
           {selDays.length>0 && (
             <div style={{ marginTop:10, display:"flex", flexDirection:"column", gap:6 }}>
               {DAYS_SHORT.filter(d=>selDays.includes(d)).map(d => {
-                const [start="", end=""] = (diasH[d]||"").split(" - ");
+                const parts = (diasH[d]||"").split(" - ");
+                const start = parts[0] || "";
+                const end   = parts[1] || "";
                 return (
                   <div key={d} style={{ display:"flex", alignItems:"center", gap:6 }}>
-                     <span style={{ background:color, color:"white", fontSize:9, fontWeight:800, padding:"2px 8px", borderRadius:20, minWidth:30, textAlign:"center" }}>{d}</span>
-                     <input type="time" value={start} onChange={e=>setHora(d, `${e.target.value} - ${end}`)}
-                       style={{ flex:1, padding:"6px 8px", border:"2px solid #e8e0d8", borderRadius:10, fontSize:12, fontFamily:"Nunito, sans-serif", color:"#2C3E50", outline:"none", boxSizing:"border-box" }}/>
-                     <span style={{ fontSize:10, color:"#9a8f84" }}>a</span>
-                     <input type="time" value={end} onChange={e=>setHora(d, `${start} - ${e.target.value}`)}
-                       style={{ flex:1, padding:"6px 8px", border:"2px solid #e8e0d8", borderRadius:10, fontSize:12, fontFamily:"Nunito, sans-serif", color:"#2C3E50", outline:"none", boxSizing:"border-box" }}/>
-                </div>
-              );
-            })}
-        </div>
-      )}
+                    <span style={{ background:color, color:"white", fontSize:9, fontWeight:800, padding:"2px 8px", borderRadius:20, minWidth:30, textAlign:"center" }}>{d}</span>
+                    <input type="time" value={start} onChange={e=>setHora(d, `${e.target.value} - ${end}`)}
+                      style={{ flex:1, padding:"6px 8px", border:"2px solid #e8e0d8", borderRadius:10, fontSize:12, fontFamily:"Nunito, sans-serif", color:"#2C3E50", outline:"none", boxSizing:"border-box" }}/>
+                    <span style={{ fontSize:10, color:"#9a8f84" }}>a</span>
+                    <input type="time" value={end} onChange={e=>setHora(d, `${start} - ${e.target.value}`)}
+                      style={{ flex:1, padding:"6px 8px", border:"2px solid #e8e0d8", borderRadius:10, fontSize:12, fontFamily:"Nunito, sans-serif", color:"#2C3E50", outline:"none", boxSizing:"border-box" }}/>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         <div style={{ display:"flex", gap:8, marginTop:4 }}>
